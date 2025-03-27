@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Recipe Book</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            padding: 20px;
+            text-align: center;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px gray;
+            z-index: 1000;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .buttons:hover{
+          box-shadow: 2px 2px 2px 1px #e9ecef;
+          transition-delay: 2s;
+          transform: scale(1.1);
+        }
+        #header{
+            display: grid;
+            grid-template-columns: 1fr auto 1fr; /* Left, center, right */
+            align-items: center;
+            padding: 0 2em;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2em;
+            justify-self: start;
+        }
+        #logo{
+            font-family: 'Bubblegum Sans';
+            justify-self: center;
+        }
+        #login-container {
+            display: flex;
+            justify-content: flex-end; /* Align button to the right */
+        }
+
+        #login-button {
+            padding: 0.5em 1em; /* Prevents stretching */
+            white-space: nowrap; /* Prevents it from expanding */
+        }
+    </style>
+</head>
+<body>
+
+    <section id="header">
+        <nav class="nav-links">
+            <div class="navButton navHome"> Home </div>
+            <div class="navButton navBrowse"> Browse Recipe </div>
+            <div class="navButton navSubmit"> Submit Recipe </div>
+        </nav>
+        <div id="logo"> <i class="fa-solid fa-paw"></i> Meowcipe </div>
+        <div id="login-container">
+            <button class="btn btn-primary btn-dark login-button" onclick="openPopup('loginPopup')">Login</button>
+        </div>
+    </section>
+    <section id="welcome">
+        <div id="message">
+            
+        </div>
+        <div id="image"></div>
+    </section>
+    <section id="showcase"></section>
+    <section id="latestRecepies"></section>
+    <section id="joinus"></section>
+    <section id="footer"></section>
+    <!--<div class="container">
+        <h2>Welcome to the Online Recipe Book</h2>
+        <p>Discover and share amazing recipes with the community!</p>
+        <div class="HeaderButtons">
+          <button class="btn btn-primary rounded-pill buttons" onclick="openPopup('loginPopup')">Login</button>
+          <button class="btn btn-success buttons" onclick="openPopup('signupPopup')">Sign Up</button>
+        </div>
+    </div>
+    
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+    
+    <div class="popup" id="loginPopup">
+        <h4>Login</h4>
+        <input type="text" class="form-control mb-2" placeholder="Username">
+        <input type="password" class="form-control mb-2" placeholder="Password">
+        <button class="btn btn-primary btn-block">Login</button>
+        <button class="btn btn-secondary btn-block" onclick="closePopup()">Cancel</button>
+    </div>
+    
+    <div class="popup" id="signupPopup">
+        <h4>Sign Up</h4>
+        <input type="text" class="form-control mb-2" placeholder="Username">
+        <input type="email" class="form-control mb-2" placeholder="Email">
+        <input type="password" class="form-control mb-2" placeholder="Password">
+        <button class="btn btn-success btn-block">Sign Up</button>
+        <button class="btn btn-secondary btn-block" onclick="closePopup()">Cancel</button>
+    </div>-->
+    
+    <script>
+        function openPopup(id) {
+            document.getElementById("overlay").style.display = "block";
+            document.getElementById(id).style.display = "block";
+        }
+        
+        function closePopup() {
+            document.getElementById("overlay").style.display = "none";
+            document.querySelectorAll(".popup").forEach(popup => popup.style.display = "none");
+        }
+    </script>
+</body>
+</html>
