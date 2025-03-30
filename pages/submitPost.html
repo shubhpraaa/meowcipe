@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit a Recipe</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -69,17 +71,58 @@
                 <input type="file" class="form-control" id="recipeImage" name="recipeImage" accept="image/*">
             </div>
 
-            <button type="submit" class="btn btn-submit">Submit Recipe</button>
+            <button type="submit" id="submitrecipe">Submit Recipe</button>
         </form>
         <div id="confirmationMessage"></div>
     </div>
     
     <script>
-        document.getElementById("recipeForm").addEventListener("submit", function(event) {
+        //TODO: change this to jquerry
+       /* document.getElementById("recipeForm").addEventListener("submit", function(event) {
             event.preventDefault();
             document.getElementById("confirmationMessage").innerText = "Recipe submitted successfully!";
             this.reset();
-        });
+        });*/
+        $(document).ready(function() {
+  $("#recipeForm").submit(function(event) {
+    $(".error").remove();
+
+    // Get form values
+    var recipeName = $("#recipeName").val().trim();
+    var ingredients = $("#ingredients").val().trim();
+    var instructions = $("#instructions").val().trim();
+    var image = $("#image")[0].files[0]; // Get the file object
+
+    // Validation flags
+    var isValid = true;
+
+    // Validate Recipe Name
+    if (recipeName === "") {
+      $("#recipeName").after("<span class='error'>Recipe name is required</span>");
+      isValid = false;
+    }
+
+    // Validate Ingredients
+    if (ingredients === "") {
+      $("#ingredients").after("<span class='error'>Ingredients are required</span>");
+      isValid = false;
+    }
+
+    // Validate Instructions
+    if (instructions === "") {
+      $("#instructions").after("<span class='error'>Instructions are required</span>");
+      isValid = false;
+    }
+    if (!image) {
+        var allowedTypes = ['image/jpeg', 'image/png', 'image/gif']; 
+      if ($.inArray(file.type, allowedTypes) === -1) {
+        errorSpan.text("Invalid file type. Only JPEG, PNG, and GIF are allowed.");
+        $(this).val(''); // Clear the input
+        return;
+      }
+    }
+  });
+});
     </script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
