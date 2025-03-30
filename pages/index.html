@@ -108,22 +108,47 @@
             max-width: 1100px;
             margin: auto;
         }
-
         #inside-showcase p:first-of-type {
             font-size: 16px;
             color: #666;
             font-weight: 600;
             margin-bottom: 5px;
         }
-
         #inside-showcase h2 {
             font-size: 36px;
             font-weight: bold;
             margin-bottom: 15px;
             line-height: 1.2;
         }
-
         #inside-showcase p {
+            font-size: 16px;
+            color: #666;
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        #inside-latRecipes {
+            text-align: left;
+            padding: 10px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        #inside-latRecipes p:first-of-type{
+            font-size: 16px;
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        #inside-latRecipes h2{
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        #inside-latRecipes p{
             font-size: 16px;
             color: #666;
             max-width: 700px;
@@ -177,6 +202,23 @@
             background-position: center;
             background-repeat: no-repeat;
             height: 60vh;
+            font-size: small;
+            display: block;
+        }
+        .inside-joinus{
+            display:grid;
+            grid-template-columns: 1fr 4fr;
+            color: aliceblue;
+            font-family: 'Roboto';
+            margin-top:5%;
+        }
+        .inside-joinus h1,p,div{
+            grid-column-start: 4;
+            grid-column-end: 4;
+        }
+        #for-submit{
+            display:flex;
+    
         }
 
         /*Bhumi's play area*/
@@ -276,11 +318,55 @@
                     <p>Be the first to explore our latest creations.</p>
                 </div>
             </div>
-
+            
         </div>
     </section>
-    <section id="latestRecepies" class="content-section"></section>
+
+
+
+    <section id="latestRecepies" class="content-section">
+        <div id="inside-latRecipes">
+            <p>Blog</p>
+            <h2>Delicious Recipes Await You</h2>
+            <p>Explore the latest and greatest in home cooking</p>
+            
+            <div class="cards">
+                <div class="card">
+                    <img alt="" src="" height="50px" width="100px">
+                    <h3>Start Your Da Ri ht with Pancakes</h3>
+                    <p>Fluffy pancakes topped with fresh berries and maple
+                        syrup.</p>
+                        <p>Read more....</p>
+                </div>
+                <div class="card">
+                    <img alt="" src="" height="50px" width="25em">
+                    <h3>Quick and Easy Veggie Wrap</h3>
+                    <p>A colorful wrap packed with fresh vegetables and hummus.</p>
+                    <p>Read more....</p>
+                </div>
+                <div class="card">
+                    <img alt="" src="" height="50px" width="100px">
+                    <h3>Savory One-Pan Chicken Dinner</h3>
+                    <p>A delicious and easy chicken desh with seasonal veggies.</p>
+                    <p>Read more....</p>
+                </div>
+                
+
+            </div>
+            
+        </div>
+    </section>
     <section id="joinus" class="content-section">
+        <div class="inside-joinus">
+            <h1> Join Our Recipe Community!</h1>
+            <p>Subscribe to our newsletter for delicious recipes and exciting updates delivered right to your
+                inbox!</p>
+                <div id="for-submit">
+                    <input type="email" id="email" value="" placeholder="Your Email Here">
+                    <button type="submit" id="Subscribe-Now">Subscribe Now</button>
+                </div>
+                <p>By Clicking Subscribe Now,you agree to our Terms and Conditions</p>
+        </div>
 
     </section>
     <section id="footer" class="content-section"></section>
@@ -325,6 +411,21 @@
         function toggleMenu() {
             document.querySelector(".nav-links").classList.toggle("active");
         }
+        function subscribe() {
+            const email = document.getElementById('email').value()
+            console.log(email)
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (email === '') {
+                alert(" Please enter an email address.");
+            } else if (!emailRegex.test(email)) {
+            alert( " Invalid email format. Please enter a valid email.");
+            } else {
+            alert( " Thank you for subscribing!");
+            }
+        }
+        document.getElementById('Subscribe-Now').addEventListener('click', subscribe);
+        
     </script>
 </body>
 </html>
