@@ -383,7 +383,7 @@
     
     <div class="popup" id="loginPopup">
         <h4>Login</h4>
-        <input type="text" class="form-control mb-2" placeholder="Username" id="log-username">
+        <input type="email" class="form-control mb-2" placeholder="email" id="log-email">
         <input type="password" class="form-control mb-2" placeholder="Password" id="log-pass">
         <button class="btn btn-primary btn-block" id="hit-login">Login</button>
         <button class="btn btn-secondary btn-block" onclick="closePopup()">Cancel</button>
@@ -450,14 +450,14 @@
             })
 
             $('#hit-login').click(()=>{
-                const username = $('#log-username').val()
+                const email = $('#log-email').val()
                 const password = $('#log-pass').val()
 
                 $.ajax({
                     url:'/login',
                     type:'POST',
                     contentType:"application/json",
-                    data:JSON.stringify({username,password}),
+                    data:JSON.stringify({email,password}),
                     success:function(response){
                         console.log("Frontend gets the response: ",response)
                         window.location="/"
