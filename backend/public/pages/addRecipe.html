@@ -12,6 +12,30 @@
             font-family: 'Poppins', sans-serif;
             background-color: #f8f9fa;
         }
+        #header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2em;
+            position: relative;
+        }
+        .hamburger{display: none;}
+        .nav-links {
+            display: flex;
+            gap: 2em;
+            justify-self: start;
+        }
+        #logo{
+            /*grid-row-start: 2;*/
+            font-family: 'Bubblegum Sans';
+            position: absolute;
+            left: 50%; 
+            transform: translateX(-50%);
+        }
+        #login-container {
+            display: flex;
+            justify-content: flex-end; /* Align button to the right */
+        }
         .container {
             max-width: 600px;
             background: #fff;
@@ -51,6 +75,21 @@
     </style>
 </head>
 <body>
+    <section id="header">
+        <div class="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <nav class="nav-links">
+            <div class="navButton navHome"> Home </div>
+            <div class="navButton navBrowse"> Browse Recipe </div>
+            <div class="navButton navSubmit hide"> Submit Recipe </div>
+            <div class="navButton navMyrecipe hide"> My Recipe </div>
+        </nav>
+        <div id="logo"> <i class="fa-solid fa-paw"></i> Meowcipe </div>
+        <div id="login-container">
+            <button class="btn btn-primary btn-dark logout-button" onclick="logoutUser()">Logout</button>
+        </div>
+    </section>
     <div class="container shadow-lg">
         <h2>Submit Your Recipe</h2>
         <form id="recipeForm" class="needs-validation" novalidate>
@@ -90,7 +129,11 @@
             const response = await fetch("/check-login");
             const data = await response.json();
             
-            if (!data.loggedIn) {
+            if (data.loggedIn) {
+               // document.getElementById("user-info").innerText = `Welcome, ${data.user.username}!`;
+               $('.navMyrecipe').removeClass('hide');
+            }else
+            {
                window.location.href = "/";
             } 
         }
@@ -130,7 +173,10 @@
                     console.log("Form Validated")
                 }
             });
-});
+            $('.navHome').click(()=>window.location='/')
+            $('.navSubmit').click(()=>window.location='/add-recipe');
+            $('.navMyrecipe').click(()=>window.location='/my-recipe');
+        });
     </script>
 </body>
 </html>
