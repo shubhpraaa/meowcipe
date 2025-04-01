@@ -125,8 +125,8 @@
             <div class="navButton navSubmit"> Submit Recipe </div>
         </nav>
         <div id="logo"> <i class="fa-solid fa-paw"></i> Meowcipe </div>
-        <div id="login-container">
-            <button class="btn btn-primary btn-dark login-button" onclick="openPopup('loginPopup')">Login</button>
+        <div id="user-info">
+            
         </div>
     </section>
     <section class="recipe-area">
@@ -136,9 +136,18 @@
     </section>
 </body>
 <script>
+    async function checkLoginStatus() {
+        const response = await fetch("/check-login");
+        const data = await response.json();
+        
+        if (data.loggedIn) {
+            $("#user-info").text(`Welcome, ${data.user.username}!`);
+        }else{
+            window.location.href = "/";
+        }
+    }
+    document.addEventListener("DOMContentLoaded", checkLoginStatus);
     $(document).ready(()=>{
-        const name = "bhumi"
-        console.log(`hello thhis is ${name} i am a boy`)
         
         for(var i=0;i<5;i++){
             $('.inside-recipe-area').append(

@@ -48,10 +48,11 @@
         transform: scale(1.1);
         }
         #header{
-            display: grid;
-            grid-template-columns: 1fr auto 1fr; /* Left, center, right */
+            display: flex;
+            justify-content: space-between;
             align-items: center;
             padding: 0 2em;
+            position: relative;
         }
         .hamburger{display: none;}
         .nav-links {
@@ -60,8 +61,11 @@
             justify-self: start;
         }
         #logo{
+            /*grid-row-start: 2;*/
             font-family: 'Bubblegum Sans';
-            justify-self: center;
+            position: absolute;
+            left: 50%; 
+            transform: translateX(-50%);
         }
         #login-container {
             display: flex;
@@ -172,7 +176,9 @@
             border-radius: 3px;
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-
+        .hide{
+            display: none;
+        }
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
@@ -220,6 +226,9 @@
         #for-submit{
             display:flex;
 
+        }
+        .error{
+            color: red;
         }
 
         /*Bhumi's play area*/
@@ -281,6 +290,7 @@
         <div id="logo"> <i class="fa-solid fa-paw"></i> Meowcipe </div>
         <div id="login-container">
             <button class="btn btn-primary btn-dark login-button" onclick="openPopup('loginPopup')">Login</button>
+            <button class="btn btn-primary btn-dark logout-button hide" onclick="logoutUser()">Logout</button>
         </div>
     </section>
     <!--Section One-->
@@ -400,6 +410,25 @@
             document.getElementById("overlay").style.display = "none";
             document.querySelectorAll(".popup").forEach(popup => popup.style.display = "none");
         }
+        async function logoutUser() {
+            await fetch("/logout");
+            alert("Logged out successfully!");
+            window.location.href = "/";
+        }
+        async function checkLoginStatus() {
+            const response = await fetch("/check-login");
+            const data = await response.json();
+            
+            if (data.loggedIn) {
+               // document.getElementById("user-info").innerText = `Welcome, ${data.user.username}!`;
+               $('.login-button').addClass('hide');
+               $('.logout-button').removeClass('hide');
+            } 
+            //else {
+                //document.getElementById("user-info").innerText = "You are not logged in.";
+            //}
+        }
+        document.addEventListener("DOMContentLoaded", checkLoginStatus);
         $(document).ready(()=>{
 
             $('.hamburger').click((event)=>{
@@ -434,7 +463,8 @@
                         window.location="/"
                     },
                     error:function(xhr){
-                        alert(xhr.responseJSON.error);   
+                        $('#loginPopup h4:first-of-type').after(`<span class='error'>${xhr.responseJSON.error}</span>`)
+                        //alert(xhr.responseJSON.error); 
                     }
                 });
             });
@@ -449,11 +479,11 @@
                     contentType:"application/json",
                     data:JSON.stringify({username,email,password}),
                     success:function(response){
-                        console.log("Frontend gets the response: ",response)
                         window.location="/"
                     },
                     error:function(xhr){
-                        alert(xhr.responseJSON.error);   
+                        $('#signupPopup h4:first-of-type').after(`<span class='error'>${xhr.responseJSON.error}</span>`)
+                        //alert(xhr.responseJSON.error);   
                     }
                 });
             });

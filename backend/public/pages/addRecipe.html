@@ -86,6 +86,15 @@
             document.getElementById("confirmationMessage").innerText = "Recipe submitted successfully!";
             this.reset();
         });*/
+        async function checkLoginStatus() {
+            const response = await fetch("/check-login");
+            const data = await response.json();
+            
+            if (!data.loggedIn) {
+               window.location.href = "/";
+            } 
+        }
+        document.addEventListener("DOMContentLoaded", checkLoginStatus);
         $(document).ready(function() {
             $("#recipeForm").submit(function(event) {
                 event.preventDefault();
