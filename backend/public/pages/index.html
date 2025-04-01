@@ -285,7 +285,8 @@
         <nav class="nav-links">
             <div class="navButton navHome"> Home </div>
             <div class="navButton navBrowse"> Browse Recipe </div>
-            <div class="navButton navSubmit"> Submit Recipe </div>
+            <div class="navButton navSubmit hide"> Submit Recipe </div>
+            <div class="navButton navMyrecipe hide"> My Recipe </div>
         </nav>
         <div id="logo"> <i class="fa-solid fa-paw"></i> Meowcipe </div>
         <div id="login-container">
@@ -423,6 +424,8 @@
                // document.getElementById("user-info").innerText = `Welcome, ${data.user.username}!`;
                $('.login-button').addClass('hide');
                $('.logout-button').removeClass('hide');
+               $('.navSubmit').removeClass('hide');
+               $('.navMyrecipe').removeClass('hide');
             } 
             //else {
                 //document.getElementById("user-info").innerText = "You are not logged in.";
@@ -487,6 +490,10 @@
                     }
                 });
             });
+
+            $('.navHome').click(()=>window.location='/')
+            $('.navSubmit').click(()=>window.location='/add-recipe');
+            $('.navMyrecipe').click(()=>window.location='/my-recipe')
             
         });
     </script>
