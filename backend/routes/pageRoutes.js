@@ -12,33 +12,15 @@ router.get('/',(req,res)=>{
 router.get('/my-recipe',(req,res)=>{
     res.sendFile(path.join(__dirname,'../public/pages/myRecipe.html'))
 })
-router.get('/add-recipe',(req,res)=>{
-    res.sendFile(path.join(__dirname,'../public/pages/addRecipe.html'))
+router.get('/upload-recipe',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../public/pages/addRecipe2.html'))
 })
 
-router.post("/login", async (req, res) => {
-    try {
-        const {username,password} = req.body;
-        //const result = await AuthService.login(email, password);
-
-        //req.session.user = result.user; // Store user in session
-        console.log(username,' logged In')
-        res.status(200).json({ message: "Login successful" });
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-});
-router.post("/signup", async (req, res) => {
-    try {
-        const {username,email,password} = req.body;
-        //const result = await AuthService.login(email, password);
-
-        //req.session.user = result.user; // Store user in session
-        console.log(username,' Signed UP')
-        res.status(200).json({ message: "Signup successful" });
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-});
+router.post('/upload-recipe',(req,res)=>{
+    const data = req.body;
+    const recipe = {...data,author:req.session.user['_id']}
+    console.log(recipe)
+    res.sendStatus(200);
+})
 
 export default router;
