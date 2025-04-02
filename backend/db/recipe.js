@@ -11,4 +11,16 @@ const recipeSchema = new mongoose.Schema({
     author: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 }, { timestamps: true });
 
-export default mongoose.model("Recipe", recipeSchema);
+const Recipe = mongoose.model("Recipe", recipeSchema);
+
+class RecipeService{
+    static async addRecipe(recipeData){
+        try{
+            const newRecipe = new Recipe(recipeData);
+            await newRecipe.save();
+            return {message: "Recipe is saved"};
+        }catch(error){
+            throw new Error(error.message);
+        }
+    }
+}
