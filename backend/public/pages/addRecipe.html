@@ -41,17 +41,40 @@
             background: #fff;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-top: 50px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin: 50px auto;
         }
+
         h2 {
             color: #343a40;
             text-align: center;
             margin-bottom: 20px;
+            font-weight: 600;
         }
+
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+        }
+
         .form-control {
             border-radius: 5px;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            font-size: 14px;
+            transition: border-color 0.3s ease-in-out;
         }
+
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.25);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
         .btn-submit {
             background: #28a745;
             color: white;
@@ -59,19 +82,40 @@
             padding: 12px;
             font-size: 16px;
             border-radius: 5px;
+            border: none;
+            transition: background 0.3s ease-in-out;
         }
+
         .btn-submit:hover {
             background: #218838;
         }
+
         #confirmationMessage {
             margin-top: 15px;
             font-weight: bold;
-            color: #28a745;
             text-align: center;
         }
-        .error{
+
+        .success {
+            color: #28a745;
+        }
+
+        .error {
             color: red;
         }
+
+        /* Styling for File Upload */
+        input[type="file"] {
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            background: #f8f9fa;
+        }
+
+        input[type="file"]:hover {
+            background: #e9ecef;
+        }
+
     </style>
 </head>
 <body>
@@ -92,28 +136,38 @@
     </section>
     <div class="container shadow-lg">
         <h2>Submit Your Recipe</h2>
-        <form id="recipeForm" class="needs-validation" novalidate>
+        <form id="recipeForm" class="needs-validation" enctype="multipart/form-data" novalidate>
             <div class="mb-3">
                 <label for="recipeName" class="form-label">Recipe Name:</label>
-                <input type="text" class="form-control" id="recipeName" name="recipeName" required>
+                <input type="text" class="form-control" id="recipeName" name="title" required>
             </div>
-
+    
+            <div class="mb-3">
+                <label for="description" class="form-label">Description:</label>
+                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+            </div>
+    
             <div class="mb-3">
                 <label for="ingredients" class="form-label">Ingredients (comma separated):</label>
                 <textarea class="form-control" id="ingredients" name="ingredients" rows="3" required></textarea>
             </div>
-
+    
             <div class="mb-3">
                 <label for="instructions" class="form-label">Instructions:</label>
                 <textarea class="form-control" id="instructions" name="instructions" rows="4" required></textarea>
             </div>
-
+    
+            <div class="mb-3">
+                <label for="category" class="form-label">Category ID (Optional):</label>
+                <input type="text" class="form-control" id="category" name="category">
+            </div>
+    
             <div class="mb-3">
                 <label for="recipeImage" class="form-label">Upload Image:</label>
-                <input type="file" class="form-control" id="recipeImage" name="recipeImage" accept="image/jpeg image/png image/jpg">
+                <input type="file" class="form-control" id="recipeImage" name="image" accept="image/jpeg, image/png, image/jpg">
             </div>
-
-            <button type="submit" id="submitrecipe" class="btn btn-submit">Submit Recipe</button>
+    
+            <button type="submit" id="submitRecipe" class="btn btn-submit">Submit Recipe</button>
         </form>
         <div id="confirmationMessage"></div>
     </div>

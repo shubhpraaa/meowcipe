@@ -12,8 +12,15 @@ router.get('/',(req,res)=>{
 router.get('/my-recipe',(req,res)=>{
     res.sendFile(path.join(__dirname,'../public/pages/myRecipe.html'))
 })
-router.get('/add-recipe',(req,res)=>{
-    res.sendFile(path.join(__dirname,'../public/pages/addRecipe.html'))
+router.get('/upload-recipe',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../public/pages/addRecipe2.html'))
+})
+
+router.post('/upload-recipe',(req,res)=>{
+    const data = req.body;
+    const recipe = {...data,author:req.session.user['_id']}
+    console.log(recipe)
+    res.sendStatus(200);
 })
 
 export default router;

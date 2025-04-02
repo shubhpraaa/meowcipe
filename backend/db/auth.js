@@ -41,7 +41,7 @@ class AuthService {
             if (!isMatch) {
                 throw new Error("Invalid credentials");
             }
-            return { message: "Login successful", user };
+            return user;
         } catch (error) {
             throw new Error(error.message);
         }

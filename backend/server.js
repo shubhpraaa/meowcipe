@@ -11,8 +11,8 @@ import authRouter from './routes/authRoutes.js'
 const app = express();
 const PORT = 3000;
 
-app.use(bodyParser.urlencoded({extended:true}));
-app.use(express.json());
+app.use(express.json({limit:'50mb'}));
+app.use(bodyParser.urlencoded({extended:true,limit:'50mb'}));
 app.use(session({
     secret: "yiddishlabradordomainrevealpurchasehenchman",
     resave: false,
