@@ -1,6 +1,7 @@
 import { Router } from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import RecipeService from '../db/recipe.js'
 
 const router = Router()
 
@@ -15,12 +16,9 @@ router.get('/my-recipe',(req,res)=>{
 router.get('/upload-recipe',(req,res)=>{
     res.sendFile(path.join(__dirname,'../public/pages/addRecipe2.html'))
 })
-
-router.post('/upload-recipe',(req,res)=>{
-    const data = req.body;
-    const recipe = {...data,author:req.session.user['_id']}
-    console.log(recipe)
-    res.sendStatus(200);
+router.get('/browse-recipe',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../public/pages/allRecipe.html'))
 })
+
 
 export default router;

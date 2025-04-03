@@ -23,4 +23,13 @@ class RecipeService{
             throw new Error(error.message);
         }
     }
+    static async getAllRecipe(skipAmount){
+        try {
+            const recipes = Recipe.find().skip(skipAmount).limit(16)
+            return recipes;
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
 }
+export default RecipeService;
