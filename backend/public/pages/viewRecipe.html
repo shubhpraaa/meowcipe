@@ -209,7 +209,6 @@
         dataType:'json',
         success:function(response){
             const recipe = response.data
-            console.log(recipe)
             $('#recipe-title').text(recipe.title)
             $('#recipe-description').text(recipe.description);
             $('#recipe-image').attr('src', recipe.image);

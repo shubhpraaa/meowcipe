@@ -10,6 +10,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 router.get('/',(req,res)=>{
     res.sendFile(path.join(__dirname,'../public/pages/index.html'))
 })
+router.get('/login',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../public/pages/loginPage.html'))
+})
+router.get('/signup',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../public/pages/signupPage.html'))
+})
 router.get('/my-recipe',(req,res)=>{
     res.sendFile(path.join(__dirname,'../public/pages/myRecipe.html'))
 })

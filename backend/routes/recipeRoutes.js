@@ -40,7 +40,7 @@ router.post('/upload-recipe',upload.single("image"),async (req,res)=>{
         res.status(400).json({message:"Couldn't Add recipe"})
     }
 })
-router.get('/fetch-all-recipe',async(req,res)=>{
+router.get('/api/fetch-all-recipes',async(req,res)=>{
 
     try {
         const skip = Number(req.query.page)-1;
@@ -51,9 +51,20 @@ router.get('/fetch-all-recipe',async(req,res)=>{
         res.status(400).json({message:"Can't fetch the recipes"})
     }
 })
+router.get('/api/fetch-user-recipes',async(req,res)=>{
+
+    try {
+        const Rcount = await RecipeService.countRecipe()
+        const recipeResponse = await RecipeService.getUserRecipe(req.query.id)
+        res.status(200).json({message:"Data fetched Success!",data:recipeResponse,count:Rcount})
+    } catch (error) {
+        res.status(400).json({message:"Can't fetch the recipes"})
+    }
+})
 router.get('/api/fetch-recipe',async(req,res)=>{
 
     try {
+        console.log(req.query.id)
         const recipeResponse = await RecipeService.getRecipe(req.query.id)
         res.status(200).json({message:"Data fetched Success!",data:recipeResponse})
     } catch (error) {

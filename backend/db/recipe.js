@@ -30,6 +30,14 @@ class RecipeService{
             throw new Error(error.message)
         }
     }
+    static async getUserRecipe(id){
+        try {
+            const recipes = Recipe.find({author:id})
+            return recipes;
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
     static async getRecipe(id){
         try {
             const recipe = Recipe.findOne({ _id:id })
