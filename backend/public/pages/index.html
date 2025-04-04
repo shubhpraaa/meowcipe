@@ -20,28 +20,6 @@
             text-align: center;
             font-family: 'Poppins';
         }
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            background: white;
-            padding: 20px;
-            box-shadow: 0px 0px 10px gray;
-            z-index: 1000;
-        }
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
         .buttons:hover{
         box-shadow: 2px 2px 2px 1px #e9ecef;
         transition-delay: 2s;
@@ -231,10 +209,6 @@
             color: red;
         }
 
-        /*Bhumi's play area*/
-
-
-        /*Do touch below this*/
         @media screen and (max-width: 900px) {
             .cards {
                 flex-direction: column;
@@ -283,14 +257,14 @@
             <i class="fa-solid fa-bars"></i>
         </div>
         <nav class="nav-links">
-            <div class="navButton navHome"> Home </div>
-            <div class="navButton navBrowse"> Browse Recipe </div>
-            <div class="navButton navSubmit hide"> Submit Recipe </div>
-            <div class="navButton navMyrecipe hide"> My Recipe </div>
+            <div class="navButton navHome"><a href="/">Home</a></div>
+            <div class="navButton navBrowse"><a href="/browse-recipe">Browse Recipe</a></div>
+            <div class="navButton navSubmit hide"><a href="/upload-recipe">Submit Recipe</a></div></div>
+            <div class="navButton navMyrecipe hide"><a href="/my-recipe">My Recipe</a></div></div>
         </nav>
         <div id="logo"> <i class="fa-solid fa-paw"></i> Meowcipe </div>
         <div id="login-container">
-            <button class="btn btn-primary btn-dark login-button" onclick="openPopup('loginPopup')">Login</button>
+            <button class="btn btn-primary btn-dark login-button">Login</button>
             <button class="btn btn-primary btn-dark logout-button hide" onclick="logoutUser()">Logout</button>
         </div>
     </section>
@@ -380,37 +354,8 @@
     </section>
     <section id="footer" class="content-section"></section>
     
-    <div class="overlay" id="overlay" onclick="closePopup()"></div>
-    
-    <div class="popup" id="loginPopup">
-        <h4>Login</h4>
-        <input type="email" class="form-control mb-2" placeholder="email" id="log-email">
-        <input type="password" class="form-control mb-2" placeholder="Password" id="log-pass">
-        <button class="btn btn-primary btn-block" id="hit-login">Login</button>
-        <button class="btn btn-secondary btn-block" onclick="closePopup()">Cancel</button>
-        <span onclick="openPopup('signupPopup')">Don't Have an account!</span>
-    </div>
-    
-    <div class="popup" id="signupPopup">
-        <h4>Sign Up</h4>
-        <input type="text" id="sign-username" class="form-control mb-2" placeholder="Username">
-        <input type="email" id="sign-email" class="form-control mb-2" placeholder="Email">
-        <input type="password" id="sign-pass" class="form-control mb-2" placeholder="Password">
-        <button class="btn btn-success btn-block" id="hit-signup">Sign Up</button>
-        <button class="btn btn-secondary btn-block" onclick="closePopup()">Cancel</button>
-    </div>
-    
     <script>
         
-        function openPopup(id) {
-            document.getElementById("overlay").style.display = "block";
-            document.getElementById(id).style.display = "block";
-        }
-        
-        function closePopup() {
-            document.getElementById("overlay").style.display = "none";
-            document.querySelectorAll(".popup").forEach(popup => popup.style.display = "none");
-        }
         async function logoutUser() {
             await fetch("/logout");
             alert("Logged out successfully!");
@@ -433,7 +378,9 @@
         }
         document.addEventListener("DOMContentLoaded", checkLoginStatus);
         $(document).ready(()=>{
-
+            $('.login-button').click(()=>{
+                window.location='/login'
+            })
             $('.hamburger').click((event)=>{
                 $('.nav-links').toggleClass('active');
                 event.stopPropagation();
@@ -451,49 +398,6 @@
                 alert( " Thank you for subscribing!");
                 }
             })
-
-            $('#hit-login').click(()=>{
-                const email = $('#log-email').val()
-                const password = $('#log-pass').val()
-
-                $.ajax({
-                    url:'/login',
-                    type:'POST',
-                    contentType:"application/json",
-                    data:JSON.stringify({email,password}),
-                    success:function(response){
-                        console.log("Frontend gets the response: ",response)
-                        window.location="/"
-                    },
-                    error:function(xhr){
-                        $('#loginPopup h4:first-of-type').after(`<span class='error'>${xhr.responseJSON.error}</span>`)
-                        //alert(xhr.responseJSON.error); 
-                    }
-                });
-            });
-            $('#hit-signup').click(()=>{
-                const username = $('#sign-username').val()
-                const email = $('#sign-email').val()
-                const password = $('#sign-pass').val()
-
-                $.ajax({
-                    url:'/signup',
-                    type:'POST',
-                    contentType:"application/json",
-                    data:JSON.stringify({username,email,password}),
-                    success:function(response){
-                        window.location="/"
-                    },
-                    error:function(xhr){
-                        $('#signupPopup h4:first-of-type').after(`<span class='error'>${xhr.responseJSON.error}</span>`)
-                        //alert(xhr.responseJSON.error);   
-                    }
-                });
-            });
-
-            $('.navHome').click(()=>window.location='/')
-            $('.navSubmit').click(()=>window.location='/upload-recipe');
-            $('.navMyrecipe').click(()=>window.location='/my-recipe');
             
         });
     </script>

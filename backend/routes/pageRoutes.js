@@ -1,6 +1,7 @@
 import { Router } from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import RecipeService from '../db/recipe.js'
 
 const router = Router()
 
@@ -9,18 +10,23 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 router.get('/',(req,res)=>{
     res.sendFile(path.join(__dirname,'../public/pages/index.html'))
 })
+router.get('/login',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../public/pages/loginPage.html'))
+})
+router.get('/signup',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../public/pages/signupPage.html'))
+})
 router.get('/my-recipe',(req,res)=>{
     res.sendFile(path.join(__dirname,'../public/pages/myRecipe.html'))
 })
 router.get('/upload-recipe',(req,res)=>{
     res.sendFile(path.join(__dirname,'../public/pages/addRecipe2.html'))
 })
-
-router.post('/upload-recipe',(req,res)=>{
-    const data = req.body;
-    const recipe = {...data,author:req.session.user['_id']}
-    console.log(recipe)
-    res.sendStatus(200);
+router.get('/browse-recipe',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../public/pages/allRecipe.html'))
+})
+router.get('/viewcard',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../public/pages/viewRecipe.html'))
 })
 
 export default router;

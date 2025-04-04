@@ -46,6 +46,14 @@ class AuthService {
             throw new Error(error.message);
         }
     }
+    static async getUserInfo(id){
+        try{
+            const user = await User.findById(id);
+            return user.username;
+        }catch(error){
+            throw new Error(error.message);
+        }
+    }
 }
 
 export default AuthService;
