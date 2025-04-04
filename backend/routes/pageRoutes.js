@@ -19,6 +19,8 @@ router.get('/upload-recipe',(req,res)=>{
 router.get('/browse-recipe',(req,res)=>{
     res.sendFile(path.join(__dirname,'../public/pages/allRecipe.html'))
 })
-
+router.get('/viewcard',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../public/pages/viewRecipe.html'))
+})
 
 export default router;

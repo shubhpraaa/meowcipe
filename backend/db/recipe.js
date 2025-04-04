@@ -12,7 +12,6 @@ const recipeSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const Recipe = mongoose.model("Recipe", recipeSchema);
-
 class RecipeService{
     static async addRecipe(recipeData){
         try{
@@ -29,6 +28,23 @@ class RecipeService{
             return recipes;
         } catch (error) {
             throw new Error(error.message)
+        }
+    }
+    static async getRecipe(id){
+        try {
+            const recipe = Recipe.findOne({ _id:id })
+            return recipe;
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+    static async countRecipe(){
+        try{
+            const count = await Recipe.countDocuments();
+            return count;
+        }catch(error){
+            console.log(error)
+            return 0;
         }
     }
 }

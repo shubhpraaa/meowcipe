@@ -44,9 +44,20 @@ router.get('/fetch-all-recipe',async(req,res)=>{
 
     try {
         const skip = Number(req.query.page)-1;
+        const Rcount = await RecipeService.countRecipe()
         const recipeResponse = await RecipeService.getAllRecipe(skip*10)
+        res.status(200).json({message:"Data fetched Success!",data:recipeResponse,count:Rcount})
+    } catch (error) {
+        res.status(400).json({message:"Can't fetch the recipes"})
+    }
+})
+router.get('/api/fetch-recipe',async(req,res)=>{
+
+    try {
+        const recipeResponse = await RecipeService.getRecipe(req.query.id)
         res.status(200).json({message:"Data fetched Success!",data:recipeResponse})
     } catch (error) {
+        console.log(error)
         res.status(400).json({message:"Can't fetch the recipes"})
     }
 })

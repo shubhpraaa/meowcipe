@@ -41,7 +41,9 @@
             display: flex;
             justify-content: flex-end; /* Align button to the right */
         }
-
+        .hidden{
+            display: none;
+        }
         #login-button {
             padding: 0.5em 1em; /* Prevents stretching */
             white-space: nowrap; /* Prevents it from expanding */
@@ -55,12 +57,13 @@
             max-height: 200px;
             height: auto;
             width: auto;
-            object-fit: cover;
+            object-fit:fill;
             border-radius: 10px;
         }
         .inside-recipe-area{
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
         .recipe-card {
             max-width: 350px;
@@ -86,6 +89,10 @@
         .btn-save:hover {
             background-color: #ff5722;
             color: white;
+        }
+        .recipe-area{
+            padding: 20px;
+            background-color: #ff5722;
         }
         @media screen and (max-width: 900px) {
             .cards {
@@ -133,7 +140,7 @@
             <div class="navButton navBrowse"> Browse Recipe </div>
             <div class="navButton navSubmit hide"> Submit Recipe </div>
             <div class="navButton navMyrecipe hide"> My Recipe </div>
-
+        
         </nav>
         <div id="logo"> <i class="fa-solid fa-paw"></i> Meowcipe </div>
         <div id="login-container">
@@ -161,6 +168,7 @@
     }
     document.addEventListener("DOMContentLoaded", checkLoginStatus);
     let page=1;
+    let documentCount=0
     function fetchRecipe(){
         $.ajax({
             url:`/fetch-all-recipe?page=${page}`,
@@ -168,10 +176,12 @@
             dataType:'json',
             success:(response)=>{
                 console.log(response.data)
+                $('.inside-recipe-area').empty()
+                documentCount = response.count;
                 response.data.forEach(recipe=>{
                     $('.inside-recipe-area').append(
                         `
-                        <div class="card recipe-card">
+                        <div class="card recipe-card " id="${recipe['_id']}">
                             <img src="../..${recipe.image}" class="fixed-image" alt="Gluten Free Pan Pizza">
                             <div class="card-body">
                                 <div class="badge-container">
@@ -199,10 +209,19 @@
             page=page+1;
             fetchRecipe();
         })
+
+        $(document).on('click', '.recipe-card', function() {
+            const id = $(this).attr('id');
+            window.location = `/viewcard?id=${id}`;
+        });
         $('.navHome').click(()=>window.location='/')
-        $('.navSubmit').click(()=>window.location='/add-recipe');
+        $('.navSubmit').click(()=>window.location='/upload-recipe');
         $('.navMyrecipe').click(()=>window.location='/my-recipe');
         $('.navBrowse').click(()=>window.location='/browse-recipe');
+        console.log(documentCount,page)
+        if(documentCount<page){
+            $('.next-btn').addClass('hidden')
+        }
     })
 </script>
 </html>

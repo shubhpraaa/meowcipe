@@ -24,6 +24,9 @@ router.get("/logout", (req, res) => {
         res.json({ message: "Logged out successfully" });
     });
 });
+router.get('/api/getUserName',async (req,res)=>{
+    
+})
 router.get("/check-login", (req, res) => {
     console.log("Checking login")
     if (req.session.user) {

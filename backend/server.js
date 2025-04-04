@@ -18,8 +18,8 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false }
 }));
-
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+app.use(express.static('public'));
 app.use(recipeRouter);
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}));
