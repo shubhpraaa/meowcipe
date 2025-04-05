@@ -181,6 +181,14 @@
     .recipe-area{
         padding: 20px;
     }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-In {
+        animation: fadeIn 0.5s ease;
+    }
     @media (max-width: 992px) {
         .hamburger {
         display: flex;
@@ -232,35 +240,34 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header-container">
-          <section id="header">
-            <div class="hamburger">
-              <i class="fa-solid fa-bars"></i>
-            </div>
-            
-            <div id="logo"> 
-              <i class="fa-solid fa-paw"></i> Meowcipe 
-            </div>
-            
-            <nav class="nav-links">
-              <div class="navButton navHome active"><a href="/">Home</a></div>
-              <div class="navButton navBrowse"><a href="/browse-recipe">Browse Recipe</a></div>
-              <div class="navButton navSubmit"><a href="/upload-recipe">Submit Recipe</a></div>
-              <div class="navButton navMyrecipe"><a href="/my-recipe">My Recipe</a></div>
-            </nav>
-            
-            <div id="login-container">
-              <button class="btn logout-button" onclick="logoutUser()">.</button>
-            </div>
-          </section>
+    <div class="header-container">
+        <section id="header">
+        <div class="hamburger">
+            <i class="fa-solid fa-bars"></i>
         </div>
-        <section class="recipe-area">
-          <div class="inside-recipe-area">
-              
-          </div>
+        
+        <div id="logo"> 
+            <i class="fa-solid fa-paw"></i> Meowcipe 
+        </div>
+        
+        <nav class="nav-links">
+            <div class="navButton navHome"><a href="/">Home</a></div>
+            <div class="navButton navBrowse"><a href="/browse-recipe">Browse Recipe</a></div>
+            <div class="navButton navSubmit"><a href="/upload-recipe">Submit Recipe</a></div>
+            <div class="navButton navMyrecipe active"><a href="/my-recipe">My Recipe</a></div>
+        </nav>
+        
+        <div id="login-container">
+            <button class="btn logout-button" onclick="logoutUser()">.</button>
+        </div>
         </section>
-      </div>
+    </div>
+    <section class="recipe-area">
+        <div class="inside-recipe-area">
+            
+        </div>
+    </section>
+
 </body>
 <script>
     async function logoutUser() {
@@ -294,7 +301,7 @@
           response.data.forEach(recipe=>{
             $('.inside-recipe-area').append(
               `
-              <div class="card recipe-card " id="${recipe['_id']}">
+              <div class="card recipe-card fade-In " id="${recipe['_id']}">
                   <img src="../..${recipe.image}" class="fixed-image" alt="Gluten Free Pan Pizza">
                   <div class="card-body">
                       <div class="badge-container">
