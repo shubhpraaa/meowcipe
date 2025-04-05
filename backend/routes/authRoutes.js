@@ -22,17 +22,19 @@ router.get("/logout", (req, res) => {
     });
 });
 router.get('/api/getUserName',async (req,res)=>{
-    
+    try {
+        const username = await AuthService.getUserInfo(req.query.id)
+        res.json({user:username}) ;
+    } catch (error) {
+        console.log(error)
+        res.json({data:"Not Found"})
+    }
 })
 router.get("/check-login", (req, res) => {
-    console.log("Checking login")
     if (req.session.user) {
         res.json({ loggedIn: true, user: req.session.user });
-        console.log("user is logged")
     } else {
         res.json({ loggedIn: false });
-        console.log("user is not logged")
-
     }
 });
 router.post("/signup", async (req, res) => {

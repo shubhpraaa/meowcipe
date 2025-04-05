@@ -165,7 +165,6 @@
     .btn-save {
         border: 1px solid #ff5722;
         color: #ff5722;
-        z-index: 1;
     }
     .btn-save:hover {
         background-color: #ff5722;
@@ -247,8 +246,8 @@
             <div class="navButton navHome"><a href="/">Home</a></div>
             <div class="navButton navBrowse"><a href="/browse-recipe">Browse Recipe</a></div>
             <div class="navButton navSubmit"><a href="/upload-recipe">Submit Recipe</a></div>
-            <div class="navButton navMyrecipe active"><a href="/my-recipe">My Recipe</a></div>
-            <div class="navButton Saved"><a href="/saved">Saved</a></div>
+            <div class="navButton navMyrecipe"><a href="/my-recipe">My Recipe</a></div>
+            <div class="navButton navMyrecipe active"><a href="/saved">Saved</a></div>
         </nav>
         
         <div id="login-container">
@@ -256,7 +255,7 @@
         </div>
         </section>
     </div>
-    <section class="recipe-area mx-auto">
+    <section class="recipe-area">
         <div class="inside-recipe-area">
             
         </div>
@@ -280,34 +279,57 @@
     }
     let userid;
 
-    let page=1;
-    let documentCount=0
     function fetchRecipe(){
       $.ajax({
-        url:`/api/fetch-all-recipes?page=${page}&id=${userid}`,
-        type:'get',
+        url:`/api/get-Saves?id=${userid}`,
+        method:'get',
         dataType:'json',
-        success:(response)=>{
-          $('.inside-recipe-area').empty()
-          documentCount = response.count;
-          response.data.forEach(recipe=>{
-            $('.inside-recipe-area').append(
-              `
-              <div class="card recipe-card fade-In " id="${recipe['_id']}">
-                  <img src="../..${recipe.image}" class="fixed-image" alt="Gluten Free Pan Pizza">
-                  <div class="card-body">
-                      <div class="badge-container">
-                          <span class="badge bg-warning text-dark">GLUTEN FREE</span>
-                          <span class="badge bg-danger">MAIN DISH</span>
-                      </div>
-                      <h5 class="card-title fw-bold">${recipe.title}</h5>
-                      <p class="card-text">${recipe.description}</p>
-                      <button class="btn btn-outline-danger btn-save w-100">&#128190; Save</button>
-                  </div>
-              </div>
-              `
-            )
-          })
+        success:(info)=>{
+            $('.inside-recipe-area').empty()
+            if(info.data){
+                $.ajax({
+                    url:`/api/fetch-saved-recipe`,
+                    type:'get',
+                    data:{ids:info.data.recipes},
+                    dataType:'json',
+                    success:(response)=>{
+                        if(response.data.length>0){
+                            response.data.forEach(recipe=>{
+                                $('.inside-recipe-area').append(
+                                    `
+                                    <div class="card recipe-card fade-In " id="${recipe['_id']}">
+                                        <img src="../..${recipe.image}" class="fixed-image" alt="Gluten Free Pan Pizza">
+                                        <div class="card-body">
+                                            <div class="badge-container">
+                                                <span class="badge bg-warning text-dark">GLUTEN FREE</span>
+                                                <span class="badge bg-danger">MAIN DISH</span>
+                                            </div>
+                                            <h5 class="card-title fw-bold">${recipe.title}</h5>
+                                            <p class="card-text">${recipe.description}</p>
+                                        </div>
+                                    </div>
+                                    `
+                                )
+                            })
+                        }else{
+                            $('.inside-recipe-area').append(
+                                    `
+                                    <h1>No Recipe Saved</h1>
+                                    `
+                                )
+                        }
+                    },
+                    error:(error)=>{
+                    console.log(error)
+                    }
+                });
+            }else{
+                $('.inside-recipe-area').append(
+                    `
+                    <h1>No Recipe Saved</h1>
+                    `
+                )
+            }
         },
         error:(error)=>{
           console.log(error)
@@ -315,41 +337,16 @@
       });
     }
     $(document).ready(async ()=>{
-        await checkLoginStatus();
+        await checkLoginStatus()
         fetchRecipe();
-        $('.next-btn').click(()=>{
-            page=page+1;
-            fetchRecipe();
-        })
-        
+
         $(document).on('click', '.recipe-card', function() {
             const id = $(this).attr('id');
             window.location = `/viewcard?id=${id}`;
         });
-        if(documentCount<page){
-            $('.next-btn').addClass('hidden')
-        }
         $('.hamburger').click(()=>{
         $('.nav-links').toggleClass('show');
         })
-        $(document).on('click', '.btn-save', function(e){
-            e.stopPropagation();
-            const id = $(this).closest('.recipe-card').attr('id')
-            const el = $(this)
-            $.ajax({
-                url:'/api/saveRecipe',
-                method:'POST',
-                contentType: 'application/json',
-                data:JSON.stringify({userId:userid,recipeId:id}),
-                dataType:'json',
-                success:function(response){
-                    el.text('Saved')
-                },
-                error:function(error){
-                    console.log(error.message)
-                }
-            })
-        });
     })
 </script>
 </html>

@@ -24,7 +24,7 @@ class RecipeService{
     }
     static async getAllRecipe(skipAmount){
         try {
-            const recipes = Recipe.find().skip(skipAmount).limit(16)
+            const recipes =await Recipe.find().skip(skipAmount).limit(16)
             return recipes;
         } catch (error) {
             throw new Error(error.message)
@@ -32,7 +32,7 @@ class RecipeService{
     }
     static async getUserRecipe(id){
         try {
-            const recipes = Recipe.find({author:id})
+            const recipes =await Recipe.find({author:id})
             return recipes;
         } catch (error) {
             throw new Error(error.message)
@@ -40,8 +40,24 @@ class RecipeService{
     }
     static async getRecipe(id){
         try {
-            const recipe = Recipe.findOne({ _id:id })
+            const recipe = await Recipe.findOne({ _id:id })
             return recipe;
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+    static async getSavedRecipe(id){
+        try {
+            const recipe = await Recipe.find({ _id:id })
+            return recipe;
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+    static async deleteRecipe(id){
+        try {
+            const ack = await Recipe.findByIdAndDelete(id)
+            return ack;
         } catch (error) {
             throw new Error(error.message)
         }

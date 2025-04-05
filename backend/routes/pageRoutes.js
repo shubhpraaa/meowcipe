@@ -20,7 +20,7 @@ router.get('/my-recipe',(req,res)=>{
     res.sendFile(path.join(__dirname,'../public/pages/myRecipe.html'))
 })
 router.get('/upload-recipe',(req,res)=>{
-    res.sendFile(path.join(__dirname,'../public/pages/addRecipe2.html'))
+    res.sendFile(path.join(__dirname,'../public/pages/addRecipe.html'))
 })
 router.get('/browse-recipe',(req,res)=>{
     res.sendFile(path.join(__dirname,'../public/pages/allRecipe.html'))
@@ -28,5 +28,7 @@ router.get('/browse-recipe',(req,res)=>{
 router.get('/viewcard',(req,res)=>{
     res.sendFile(path.join(__dirname,'../public/pages/viewRecipe.html'))
 })
-
+router.get('/saved',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../public/pages/savedRecipes.html'))
+})
 export default router;
