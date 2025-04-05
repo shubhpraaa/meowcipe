@@ -9,6 +9,7 @@ import path from 'path';
 import pageRouter from './routes/pageRoutes.js'
 import recipeRouter from './routes/recipeRoutes.js'
 import authRouter from './routes/authRoutes.js'
+import savesRouters from './routes/savesRoutes.js'
 
 const app = express();
 const PORT = 3000;
@@ -25,7 +26,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(pageRouter);
 app.use(authRouter);
-
+app.use(savesRouters);
 mongoose.connect('mongodb://localhost:27017/dishDB',{
     useNewUrlParser: true,
     useUnifiedTopology: true,

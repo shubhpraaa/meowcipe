@@ -12,12 +12,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
-    :root {
-      --recipe-primary: #ff6b6b;
-      --recipe-primary-dark: #e95858;
-      --recipe-text: #484848;
-    }
-    
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 20px;
@@ -42,7 +36,7 @@
     .hamburger {
       display: none;
       font-size: 1.5rem;
-      color: var(--recipe-text);
+      color: #484848;
       cursor: pointer;
       width: 40px;
       height: 40px;
@@ -62,7 +56,7 @@
       align-items: center;
       font-size: 1.5rem;
       font-weight: 700;
-      color: var(--recipe-primary);
+      color: #ff6b6b;
       margin: 0 20px;
     }
     
@@ -82,7 +76,7 @@
     }
     
     .navButton a {
-      color: var(--recipe-text);
+      color: #484848;
       text-decoration: none;
       padding: 10px 15px;
       border-radius: 6px;
@@ -93,11 +87,11 @@
     
     .navButton a:hover {
       background-color: #f8f9fa;
-      color: var(--recipe-primary);
+      color: #ff6b6b;
     }
     
     .navButton.active a {
-      color: var(--recipe-primary);
+      color: #ff6b6b;
       background-color: rgba(255, 107, 107, 0.1);
     }
     
@@ -109,7 +103,7 @@
       transform: translateX(-50%);
       width: 20px;
       height: 3px;
-      background-color: var(--recipe-primary);
+      background-color: #ff6b6b;
       border-radius: 3px;
     }
     
@@ -119,8 +113,8 @@
     }
     
     .login-button, .logout-button {
-      background-color: var(--recipe-primary);
-      border-color: var(--recipe-primary);
+      background-color: #ff6b6b;
+      border-color: #ff6b6b;
       border-radius: 6px;
       padding: 8px 16px;
       font-weight: 600;
@@ -128,8 +122,8 @@
     }
     
     .login-button:hover, .logout-button:hover {
-      background-color: var(--recipe-primary-dark);
-      border-color: var(--recipe-primary-dark);
+      background-color: #e95858;
+      border-color: #e95858;
     }
     
     .hidden {
@@ -145,9 +139,10 @@
         border-radius: 10px;
     }
     .inside-recipe-area{
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
     .recipe-card {
         max-width: 300px;
@@ -163,9 +158,6 @@
     }
     .badge-container {
         margin-bottom: 10px;
-    }
-    .star-rating {
-        color: #ff9800;
     }
     .btn-save {
         border: 1px solid #ff5722;
@@ -237,7 +229,7 @@
   </style>
 </head>
 <body>
-  <div class="header-container">
+  <div class="header-container w-100">
     <section id="header">
       <div class="hamburger">
         <i class="fa-solid fa-bars"></i>
@@ -252,6 +244,7 @@
         <div class="navButton navBrowse active"><a href="/browse-recipe">Browse Recipe</a></div>
         <div class="navButton navSubmit hidden"><a href="/upload-recipe">Submit Recipe</a></div>
         <div class="navButton navMyrecipe hidden"><a href="/my-recipe">My Recipe</a></div>
+        <div class="navButton navSaved hidden"><a href="/saved">Saved</a></div>
       </nav>
       
       <div id="login-container">
@@ -281,12 +274,12 @@
     async function checkLoginStatus() {
       const response = await fetch("/check-login");
       const data = await response.json();
-      console.log(data.loggedIn)
       if (data.loggedIn) {
           $('.login-button').addClass('hidden');
           $('.logout-button').removeClass('hidden');
           $('.navSubmit').removeClass('hidden');
           $('.navMyrecipe').removeClass('hidden');
+          $('.navSaved').removeClass('hidden');
       }
     }
     document.addEventListener("DOMContentLoaded", checkLoginStatus);
@@ -298,7 +291,6 @@
         type:'get',
         dataType:'json',
         success:(response)=>{
-          console.log(response.data)
           $('.inside-recipe-area').empty()
           documentCount = response.count;
           response.data.forEach(recipe=>{
@@ -312,7 +304,6 @@
                           <span class="badge bg-danger">MAIN DISH</span>
                       </div>
                       <h5 class="card-title fw-bold">${recipe.title}</h5>
-                      <p class="text-muted"><span class="star-rating">&#9733;&#9733;&#9733;&#9733;&#9734;</span> (72 votes)</p>
                       <p class="card-text">${recipe.description}</p>
                       <button class="btn btn-outline-danger btn-save w-100">&#128190; Save</button>
                   </div>
@@ -337,7 +328,6 @@
           const id = $(this).attr('id');
           window.location = `/viewcard?id=${id}`;
       });
-      console.log(documentCount,page)
       if(documentCount<page){
           $('.next-btn').addClass('hidden')
       }

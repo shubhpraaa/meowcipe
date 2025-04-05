@@ -241,6 +241,10 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             height: 500px;
         }
+        #we{
+            width: 100px;
+            height: 40px;
+        }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -319,6 +323,7 @@
             <div class="navButton navBrowse"><a href="/browse-recipe">Browse Recipe</a></div>
             <div class="navButton navSubmit hidden"><a href="/upload-recipe">Submit Recipe</a></div>
             <div class="navButton navMyrecipe hidden"><a href="/my-recipe">My Recipe</a></div>
+            <div class="navButton navSaved hidden"><a href="/saved">Saved</a></div>
           </nav>
           
           <div id="login-container">
@@ -447,7 +452,7 @@
     <!-- Footer Section -->
     <footer id="footer" class="bg-dark text-white py-4">
         <div class="container text-center">
-            <p class="mb-1">© Meowcipe with <i class="fa-solid fa-heart"></i> by Shubhra & Bhumi</p>
+            <span class="mb-1">© Meowcipe with <i class="fa-solid fa-heart"></i> by Shubhra & Bhumi </span><span><img id="we" src="../image/hehe.png" alt="We the people"></span>
             <p class="mb-0">Created with love for food enthusiasts everywhere.</p>
         </div>
     </footer>
@@ -469,6 +474,7 @@
                $('.logout-button').removeClass('hidden');
                $('.navSubmit').removeClass('hidden');
                $('.navMyrecipe').removeClass('hidden');
+               $('.navSaved').removeClass('hidden');
             } 
         }
         document.addEventListener("DOMContentLoaded", checkLoginStatus);

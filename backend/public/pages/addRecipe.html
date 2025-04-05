@@ -20,6 +20,7 @@
             font-family: 'Poppins', sans-serif;
             background-color: #f9f9f9;
             color: #333;
+            padding: 20px;
         }
         .header-container {
             background-color: white;
@@ -344,13 +345,13 @@
           <nav class="nav-links">
             <div class="navButton navHome"><a href="/">Home</a></div>
             <div class="navButton navBrowse"><a href="/browse-recipe">Browse Recipe</a></div>
-            <div class="navButton navSubmit hidden active"><a href="/upload-recipe">Submit Recipe</a></div>
-            <div class="navButton navMyrecipe hidden"><a href="/my-recipe">My Recipe</a></div>
+            <div class="navButton navSubmit active"><a href="/upload-recipe">Submit Recipe</a></div>
+            <div class="navButton navMyrecipe "><a href="/my-recipe">My Recipe</a></div>
+            <div class="navButton Saved "><a href="/saved">Saved</a></div>
           </nav>
           
           <div id="login-container">
-            <button class="btn login-button" onclick="location.href='/login'">Login</button>
-            <button class="btn logout-button hidden" onclick="logoutUser()">Logout</button>
+            <button class="btn logout-button" onclick="logoutUser()">Logout</button>
           </div>
         </section>
     </div>
@@ -439,12 +440,10 @@
             const response = await fetch("/check-login");
             const data = await response.json();
             
-            if (data.loggedIn) {
-               $('.login-button').addClass('hidden');
-               $('.logout-button').removeClass('hidden');
-               $('.navSubmit').removeClass('hidden');
-               $('.navMyrecipe').removeClass('hidden');
-            } 
+            if (!data.loggedIn) {
+                window.location.href = "/";
+            }
+
         }
         document.addEventListener("DOMContentLoaded", checkLoginStatus);
         $(document).ready(function() {
@@ -562,61 +561,6 @@
                         error.insertAfter(element);
                     }
                 },
-                /*submitHandler: async function(form) {
-                    // Get the HTML content from Quill editor and store it in the hidden input
-                    const instructionsHTML = quill.root.innerHTML;
-                    console.log(instructionsHTML)
-                    $('#instructions').val(instructionsHTML);
-                    
-                    // Gather all ingredients
-                    let ingredients = [];
-                    $('.ingredient-input').each(function() {
-                        let value = $(this).val().trim();
-                        if (value) ingredients.push(value);
-                    });
-                    
-                    if (ingredients.length === 0) {
-                        alert("Please add at least one ingredient");
-                        return false;
-                    }
-                    
-                    // Check if Quill editor has content
-                    if (quill.getText().trim().length === 0) {
-                        alert("Please provide cooking instructions");
-                        return false;
-                    }
-                    
-                    const file = $('#image')[0].files[0];
-                    alert(file)
-                    const formData = {
-                        title: $('#title').val(),
-                        description: $('#description').val(),
-                        prep_time: $('#prep_time').val(),
-                        cook_time: $('#cook_time').val(),
-                        ingredients: ingredients,
-                        instructions: instructionsHTML,
-                        image: file?file:null,
-                    };
-                    
-                    $.ajax({
-                        url:"/upload-recipe",
-                        type:'post',
-                        data:JSON.stringify(formData),
-                        contentType: 'application/json',
-                        processData:false,
-                        success: function(response) {
-                            form.reset();
-                            quill.root.innerHTML = "";
-                            window.location = '/my-recipe'
-                        },
-                        error: function(err) {
-                            alert("Error submitting recipe. Please try again.");
-                            console.error(err);
-                        }
-                    });
-
-                    return false;
-                }*/
                 submitHandler: function(form) {
                     const formData = new FormData();
                     formData.append("title", $('#title').val());
