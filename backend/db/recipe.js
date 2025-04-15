@@ -30,6 +30,14 @@ class RecipeService{
             throw new Error(error.message)
         }
     }
+    static async getWithQuerry(){
+        try {
+            const recipes = await Recipe.find().sort({createdAt:-1}).limit(3)
+            return recipes;
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
     static async getUserRecipe(id){
         try {
             const recipes =await Recipe.find({author:id})

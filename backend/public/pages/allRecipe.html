@@ -337,6 +337,14 @@
       $('.login-button').click(()=>{
         window.location='/login'
       })
+      $('#logo').click(function () {
+        var audio ;
+        audio = new Audio();
+        audio.src ="../audio/meow.mp3"
+        audio.addEventListener('loadeddata', function () {
+          audio.play();
+        });
+      });
     })
   </script>
 </html>

@@ -432,8 +432,16 @@
               alert("Failed to delete the recipe.");
             }
           });
-    }
+        }
       })
+      $('#logo').click(function () {
+        var audio ;
+        audio = new Audio();
+        audio.src ="../audio/meow.mp3"
+        audio.addEventListener('loadeddata', function () {
+          audio.play();
+        });
+      });
     });
   </script>
 </body>

@@ -53,6 +53,14 @@ router.get('/api/fetch-all-recipes',async(req,res)=>{
         res.status(400).json({message:"Can't fetch the recipes"})
     }
 })
+router.get('/api/fetch-front',async(req,res)=>{
+    try {
+        const recipeResponse = await RecipeService.getWithQuerry()
+        res.status(200).json({message:"Data fetched Success!",data:recipeResponse})
+    } catch (error) {
+        res.status(400).json({message:"Can't fetch the recipes"})
+    }
+})
 router.get('/api/fetch-user-recipes',async(req,res)=>{
 
     try {

@@ -1,18 +1,21 @@
 
 import express from 'express';
 import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
 import session from 'express-session';
 import path from 'path';
-//import AuthService from './auth.js';
+
 
 import pageRouter from './routes/pageRoutes.js'
 import recipeRouter from './routes/recipeRoutes.js'
 import authRouter from './routes/authRoutes.js'
 import savesRouters from './routes/savesRoutes.js'
+import mailRoutes from './routes/mailRoutes.js'
+
+import dotenv from "dotenv";
+dotenv.config()
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
 app.use(session({
     secret: "yiddishlabradordomainrevealpurchasehenchman",
     resave: false,
@@ -23,7 +26,8 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 app.use(express.static('public'));
 app.use(recipeRouter);
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:true}));
+app.use(mailRoutes)
 app.use(pageRouter);
 app.use(authRouter);
 app.use(savesRouters);

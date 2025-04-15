@@ -29,6 +29,6 @@ router.get('/viewcard',(req,res)=>{
     res.sendFile(path.join(__dirname,'../public/pages/viewRecipe.html'))
 })
 router.get('/saved',(req,res)=>{
-    res.sendFile(path.join(__dirname,'../public/pages/savedRecipes.html'))
+    res.sendFile(path.join(__dirname,'../public/pages/savedRecipes2.html'))
 })
 export default router;
