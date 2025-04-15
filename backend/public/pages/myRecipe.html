@@ -265,7 +265,9 @@
 </body>
 <script>
     async function logoutUser() {
-      await fetch("/logout");
+        await fetch("/logout");
+        alert("Logged out successfully!");
+        window.location.href = "/";
     }
     async function checkLoginStatus() {
         const response = await fetch("/check-login");
@@ -349,6 +351,14 @@
                     console.log(error.message)
                 }
             })
+        });
+        $('#logo').click(function () {
+            var audio ;
+            audio = new Audio();
+            audio.src ="../audio/meow.mp3"
+            audio.addEventListener('loadeddata', function () {
+                audio.play();
+            });
         });
     })
 </script>

@@ -42,7 +42,7 @@
     }
     
     .bg-login-image {
-      background-image: url('/api/placeholder/800/800');
+      background-image: url('../image/login.jpg');
       background-position: center;
       background-size: cover;
       position: relative;
@@ -109,18 +109,14 @@
       <div class="col-12 col-xl-10">
         <div class="card overflow-hidden" style="border-radius: 1rem;">
           <div class="row g-0">
-            <!-- Left side - Image -->
             <div class="col-md-6 d-none d-md-block bg-login-image">
               <div class="d-flex flex-column justify-content-end h-100 p-5 login-content">
                 <h2 class="fw-bold mb-2">Discover Amazing Recipes</h2>
                 <p class="mb-4">Login to save your favorites and share your culinary creations</p>
               </div>
             </div>
-            
-            <!-- Right side - Login Form -->
             <div class="col-md-6">
               <div class="card-body p-md-5 p-4">
-                <!-- Logo -->
                 <div class="d-flex align-items-center mb-4 fade-in-up">
                   <div class="logo-circle me-2">
                     <i class="fa-solid fa-paw"></i>
@@ -128,7 +124,7 @@
                   <span class="h5 mb-0 fw-bold text-dark">Meowcipe</span>
                 </div>
                 
-                <h2 class="fw-bold mb-2 fade-in-up delay-1">Welcome Back!</h2>
+                <h2 class="fw-bold mb-2 fade-in-up delay-1">Hi!</h2>
                 <p class="text-muted mb-4 fade-in-up delay-1">Please enter your credentials to access your account</p>
                 
                 <form action="/signup" method="post">
@@ -195,6 +191,14 @@
         $('#errorMessage').removeClass('hidden')
         $('#errorMessage>p').text(errorMessage)
       }
+      $('#logo').click(function () {
+        var audio ;
+        audio = new Audio();
+        audio.src ="../audio/meow.mp3"
+        audio.addEventListener('loadeddata', function () {
+          audio.play();
+        });
+      });
     })
   </script>
 </body>

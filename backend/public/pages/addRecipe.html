@@ -583,7 +583,7 @@
                     // Append the image file (if selected)
                     const file = $('#image')[0].files[0];
                     if (file) {
-                        formData.append("image", file);  // ✅ Now the file is properly sent
+                        formData.append("image", file);
                     }
 
                     // Send AJAX request
@@ -591,8 +591,8 @@
                         url: "/upload-recipe",
                         type: "POST",
                         data: formData,
-                        contentType: false,  // ✅ Important for FormData
-                        processData: false,  // ✅ Important for FormData
+                        contentType: false,
+                        processData: false,
                         success: function(response) {
                             form.reset();
                             quill.root.innerHTML = "";
@@ -610,6 +610,14 @@
             
             quill.on('text-change', function() {
                 $('#instructions').val(quill.root.innerHTML);
+            });
+            $('#logo').click(function () {
+                var audio ;
+                audio = new Audio();
+                audio.src ="../audio/meow.mp3"
+                audio.addEventListener('loadeddata', function () {
+                    audio.play();
+                });
             });
         });
     </script>

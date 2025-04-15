@@ -49,7 +49,6 @@ router.post("/signup", async (req, res) => {
                 res.redirect(`/signup?error=Coudn't login Automatically`)
             }
         }
-        
         res.redirect('/')
     } catch (error) {
         res.redirect(`/signup?error=${error.message}`)

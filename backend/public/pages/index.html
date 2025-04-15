@@ -395,37 +395,7 @@
             <h2 class="display-6 mb-3 fw-normal">Delicious Recipes Await You</h2>
             <p class="mb-5">Explore the latest and greatest in home cooking</p>
             
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <img src="https://via.placeholder.com/400x300?text=Pancakes" class="card-img-top" alt="Pancakes">
-                        <div class="card-body">
-                            <h3 class="card-title h5">Start Your Day Right with Pancakes</h3>
-                            <p class="card-text">Fluffy pancakes topped with fresh berries and maple syrup.</p>
-                            <p class="read-more">Read more....</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <img src="https://via.placeholder.com/400x300?text=Veggie+Wrap" class="card-img-top" alt="Veggie wrap">
-                        <div class="card-body">
-                            <h3 class="card-title h5">Quick and Easy Veggie Wrap</h3>
-                            <p class="card-text">A colorful wrap packed with fresh vegetables and hummus.</p>
-                            <p class="read-more">Read more....</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <img src="https://via.placeholder.com/400x300?text=Chicken+Dinner" class="card-img-top" alt="Chicken dinner">
-                        <div class="card-body">
-                            <h3 class="card-title h5">Savory One-Pan Chicken Dinner</h3>
-                            <p class="card-text">A delicious and easy chicken dish with seasonal veggies.</p>
-                            <p class="read-more">Read more....</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="row g-4 deliciousRecipes">
             </div>
         </div>
     </section>
@@ -440,7 +410,7 @@
                     
                     <div class="input-group mb-3 justify-content-center">
                         <input id="email" type="email" class="form-control subscribe-input" placeholder="Your Email Here" aria-label="Email">
-                        <button class="btn subscribe-btn" type="button">Subscribe Now</button>
+                        <button class="btn subscribe-btn" id="sub_btn" type="button">Subscribe Now</button>
                     </div>
                     
                     <p class="small opacity-75 mt-4">By Clicking Subscribe Now, you agree to our Terms and Conditions</p>
@@ -492,11 +462,59 @@
                 } else if (!emailRegex.test(email)) {
                 alert( " Invalid email format. Please enter a valid email.");
                 } else {
-                alert( " Thank you for subscribing!");
+                    $.ajax({
+                        url:'/sendMail',
+                        method:'post',
+                        data:{clientMail:email},
+                        success:function(response){
+                            alert("Thanks for subscribing")
+                        },
+                        error:function(error){
+                            alert("Something went wrong Try later")
+                        }
+                    })
                 }
             })
-            
+
+            $('#logo').click(function () {
+                var audio ;
+                audio = new Audio();
+                audio.src ="../audio/meow.mp3"
+                audio.addEventListener('loadeddata', function () {
+                    audio.play();
+                });
+            });
+            $.ajax({
+                url:`/api/fetch-front`,
+                type:'get',
+                dataType:'json',
+                success:(response)=>{
+                $('.deliciousRecipes').empty()
+                console.log(response.data)
+                response.data.forEach(recipe=>{
+                    $('.deliciousRecipes').append(
+                    `
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <img src="${recipe.image}" class="card-img-top" alt="Pancakes">
+                            <div class="card-body">
+                                <h3 class="card-title h5">${recipe.title}</h3>
+                                <p class="card-text">${recipe.description}</p>
+                                <p class="read-more">Read more....</p>
+                            </div>
+                        </div>
+                    </div>
+                    `
+                    )
+                })
+                console.log("hi")
+                },
+                error:(error)=>{
+                console.log(error)
+                }
+            });
         });
     </script>
 </body>
 </html>
+

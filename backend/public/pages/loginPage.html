@@ -36,7 +36,7 @@
     }
     
     .bg-login-image {
-      background-image: url('/api/placeholder/800/800');
+      background-image: url('../image/login.jpg');
       background-position: center;
       background-size: cover;
       position: relative;
@@ -108,7 +108,6 @@
       <div class="col-12 col-xl-10">
         <div class="card overflow-hidden" style="border-radius: 1rem;">
           <div class="row g-0">
-            <!-- Left side - Image -->
             <div class="col-md-6 d-none d-md-block bg-login-image">
               <div class="d-flex flex-column justify-content-end h-100 p-5 login-content">
                 <h2 class="fw-bold mb-2">Discover Amazing Recipes</h2>
@@ -188,6 +187,14 @@
         $('#errorMessage').removeClass('hidden')
         $('#errorMessage>p').text(errorMessage)
       }
+      $('#logo').click(function () {
+        var audio ;
+        audio = new Audio();
+        audio.src ="../audio/meow.mp3"
+        audio.addEventListener('loadeddata', function () {
+          audio.play();
+        });
+      });
     })
   </script>
 </body>
