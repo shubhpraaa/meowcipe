@@ -1,1 +1,6 @@
 /backend/node_modules
+/uploads/
+*.jpg
+*.png
+*.jpeg
+*.gif
